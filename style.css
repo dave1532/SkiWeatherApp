@@ -1,0 +1,12 @@
+.container {
+  width: 950px;
+  height: 100%;
+  margin-top: 50px;
+}
+
+.right-pic{
+  height: 330px;
+}
+option{
+  align-items: center;
+}
