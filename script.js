@@ -29,19 +29,56 @@ function go(e) {
 
 $('.formSubmit').on("click", go);
 
+// function clear(c) {
+//   c.preventDefault();
+//   var clickon = $('click');
+//   fetchWeatherData(clickon);
+// }
+
+// $('.clear').on("click", clear);
+
 function fetchWeatherData(selection) {
   $.ajax({
     url:'http://api.openweathermap.org/data/2.5/weather?lat=' + locations[selection[0].value].lat + '&lon=' + locations[selection[0].value].long + '&units=imperial&appid=' + weatherAppId,
     method: "GET",
     success: function(data){
       var ourData = {
+        weather: date.weather.main,
+        Weather: date.weather.description,
+        icon: data.img,
         temp: data.main.temp,
-        windSpeed: data.wind.speed,
-
+        wind: data.wind.speed,
       }
-      var $cast = $('<div class="forecast">' + data.main.temp + '</div>')
 
-      $(".container").append($cast)
+      var $div = $('<div />');
+      $div.addClass('forecast');
+
+      var $p = $('<p />');
+      $p.addClass('main');
+      $p.text(date.weather.main);
+      $div.append($p);
+
+      var $p = $('<p />');
+      $p.addClass('description');
+      $p.text(date.weather.description);
+      $div.append($p)
+
+      var $img = $('<img />');
+      $img.addClass('icon');
+      $img.attr('src', 'images/01d.png');
+      $div.append($img);
+
+      var $p = $('<p />');
+      $p.addClass('temperature');
+      $p.text(data.main.temp);
+      $div.append($p);
+
+      var $p = $('<p />');
+      $p.addClass('wind');
+      $p.text(data.wind.speed);
+      $div.append($p);
+
+      $(".container").append($div)
     }
   });
 }
