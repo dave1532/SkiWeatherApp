@@ -20,22 +20,20 @@ var locations = {
     long: -122.392876,
   }
 }
-
+//----------------------- buttons go and rest--------------
 function go(e) {
   e.preventDefault();
   var selection = $('option:selected');
   fetchWeatherData(selection);
 }
-
 $('.formSubmit').on("click", go);
-
 
 function clear(e) {
   e.preventDefault();
   $('.forecast').remove();
 }
-
 $('.clear').on("click", clear);
+//----------------------- buttons go and rest--------------
 
 function fetchWeatherData(selection) {
   $.ajax({
@@ -59,9 +57,7 @@ function fetchWeatherData(selection) {
         wind: data.wind.speed,
       }
 
-
       $div.addClass('forecast');
-
 
       $main.addClass('main');
       $main.text(data.weather[0].main);

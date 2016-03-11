@@ -17,8 +17,11 @@ option{
 .forecast{
   width: 138px;
   hight: 138px;
-  background-color: #669A57;
+
 }
 .George{
-  
+
+}
+.main{
+  font-size: 20px;
 }
