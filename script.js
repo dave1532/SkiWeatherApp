@@ -29,54 +29,59 @@ function go(e) {
 
 $('.formSubmit').on("click", go);
 
-// function clear(c) {
-//   c.preventDefault();
-//   var clickon = $('click');
-//   fetchWeatherData(clickon);
-// }
 
-// $('.clear').on("click", clear);
+function clear(e) {
+  e.preventDefault();
+  $('.forecast').remove();
+}
+
+$('.clear').on("click", clear);
 
 function fetchWeatherData(selection) {
   $.ajax({
     url:'http://api.openweathermap.org/data/2.5/weather?lat=' + locations[selection[0].value].lat + '&lon=' + locations[selection[0].value].long + '&units=imperial&appid=' + weatherAppId,
     method: "GET",
-    success: function(data){
+    success: function(data) {
+
+      var $div = $('<div />');
+      var $main = $('<p />');
+      var $img = $('<img />');
+      var $description = $('<p />');
+      var $temp = $('<p />');
+      var $wind = $('<p />');
+
       var ourData = {
-        weather: date.weather.main,
-        Weather: date.weather.description,
+
+        weather: data.weather.main,
+        Weather: data.weather.description,
         icon: data.img,
         temp: data.main.temp,
         wind: data.wind.speed,
       }
 
-      var $div = $('<div />');
+
       $div.addClass('forecast');
 
-      var $p = $('<p />');
-      $p.addClass('main');
-      $p.text(date.weather.main);
-      $div.append($p);
 
-      var $p = $('<p />');
-      $p.addClass('description');
-      $p.text(date.weather.description);
-      $div.append($p)
+      $main.addClass('main');
+      $main.text(data.weather[0].main);
+      $div.append($main);
 
-      var $img = $('<img />');
+      $description.addClass('description');
+      $description.text(data.weather[0].description);
+      $div.append($description)
+
       $img.addClass('icon');
-      $img.attr('src', 'images/01d.png');
+      $img.attr('src', 'http://openweathermap.org/img/w/' + data.weather[0].icon + '.png');
       $div.append($img);
 
-      var $p = $('<p />');
-      $p.addClass('temperature');
-      $p.text(data.main.temp);
-      $div.append($p);
+      $temp.addClass('temperature');
+      $temp.text(data.main.temp);
+      $div.append($temp);
 
-      var $p = $('<p />');
-      $p.addClass('wind');
-      $p.text(data.wind.speed);
-      $div.append($p);
+      $wind.addClass('wind');
+      $wind.text(data.wind.speed);
+      $div.append($wind);
 
       $(".container").append($div)
     }
